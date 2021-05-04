@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add $UBI to MetaMask</title>
+</head>
+<body>
+<script>
+const tokenAddress = '0xDd1Ad9A21Ce722C151A836373baBe42c868cE9a4'
+const tokenSymbol = 'UBI'
+const tokenDecimals = 18
+const tokenImage = 'https://justinkalland.github.io/add-ubi-to-metamask/logo.png'
+
+async function addTokenToMetaMask() {
+  try {
+    // wasAdded is a boolean. Like any RPC method, an error may be thrown.
+    const wasAdded = await ethereum.request({
+      method: 'wallet_watchAsset',
+      params: {
+        type: 'ERC20',
+        options: {
+          address: tokenAddress,
+          symbol: tokenSymbol,
+          decimals: tokenDecimals,
+          image: tokenImage,
+        },
+      },
+    })
+
+    if (wasAdded) {
+    	document.getElementById('btn').style.display = 'none'
+    	document.getElementById('success').style.display = 'inline-block'
+    }
+  } catch (error) {
+  	alert('Hmmm an error occurred, sorry....')
+    console.log(error)
+  }
+}
+</script>
+
+<div style="text-align: center">
+  <img style="width: 150px; margin: 30px" src="https://justinkalland.github.io/add-ubi-to-metamask/logo.png" alt="$UBI" /><br/>
+  <button id="btn" type="button" onclick="addTokenToMetaMask()">Add $UBI to MetaMask</button>
+  <img id="success" src="https://justinkalland.github.io/add-ubi-to-metamask/success.gif" style="display: none" />  
+</div>
+
+<div style="position: fixed; bottom: 0; left: 0; font-size: 12px; color: #777B7E; padding: 10px">
+  By <a href="https://justin.kalland.com" style="color: #777B7E">Justin</a> for the <a href="https://www.proofofhumanity.id/" style="color: #777B7E">Proof of Humanity</a> community.
+</div>
+</body>
+</html>
